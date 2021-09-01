@@ -2,22 +2,30 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
 @Injectable()
-export class AppConfigService {
+export class DatabasePostgresConfigService {
 	constructor(private configService: ConfigService) {}
 
-	get env(): string {
-		return this.configService.get<string>('app.env');
+	get type(): string {
+		return this.configService.get<string>('postgres.type');
 	}
 
-	get name(): string {
-		return this.configService.get<string>('app.name');
-	}
-
-	get url(): string {
-		return this.configService.get<string>('app.url');
+	get host(): string {
+		return this.configService.get<string>('postgres.host');
 	}
 
 	get port(): number {
-		return this.configService.get<number>('app.port');
+		return this.configService.get<number>('postgres.port');
+	}
+
+	get database(): string {
+		return this.configService.get<string>('postgres.database');
+	}
+
+	get username(): string {
+		return this.configService.get<string>('postgres.username');
+	}
+
+	get password(): string {
+		return this.configService.get<string>('postgres.password');
 	}
 }

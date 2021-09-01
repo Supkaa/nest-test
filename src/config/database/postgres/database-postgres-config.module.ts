@@ -1,6 +1,6 @@
 import * as Joi from '@hapi/joi';
 import { Module } from '@nestjs/common';
-import { AppConfigService } from './app-config.service';
+import { DatabasePostgresConfigService } from './database-postgres-config.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import configuration from './configuration';
 
@@ -9,16 +9,16 @@ import configuration from './configuration';
 		ConfigModule.forRoot({
 			load: [configuration],
 			validationSchema: Joi.object({
-				APP_NAME: Joi.string().default('Test'),
-				APP_ENV: Joi.string()
-					.valid('development', 'production', 'test')
-					.default('development'),
-				APP_URL: Joi.string().default('http://nest-first-project'),
-				APP_PORT: Joi.number().default(3000),
+				POSTGRES_TYPE: Joi.string().valid('postgres').default('postgres'),
+				POSTGRES_HOST: Joi.string().default('127.0.0.1'),
+				POSTGRES_PORT: Joi.number().default(5432),
+				POSTGRES_DATABASE: Joi.string().default('express_first_db'),
+				POSTGRES_USERNAME: Joi.string().default('express'),
+				POSTGRES_PASSWORD: Joi.string().default('express'),
 			}),
 		}),
 	],
-	providers: [AppConfigService, ConfigService],
-	exports: [AppConfigService, ConfigService],
+	providers: [DatabasePostgresConfigService, ConfigService],
+	exports: [DatabasePostgresConfigService, ConfigService],
 })
-export class AppConfigModule {}
+export class DatabasePostgresConfigModule {}
